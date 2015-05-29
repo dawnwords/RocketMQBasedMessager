@@ -36,9 +36,9 @@ public class Invoker extends Messager implements Runnable {
         LectureResponse response = (LectureResponse) messageBody;
         if (!idHandlerMap.containsKey(response.requestId)) {
             log("request id not exists");
-            return false;
+        } else {
+            idHandlerMap.get(response.requestId).addResponse(response.lectures);
         }
-        idHandlerMap.get(response.requestId).addResponse(response.lectures);
         return true;
     }
 

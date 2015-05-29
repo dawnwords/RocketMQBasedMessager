@@ -10,9 +10,9 @@ import com.alibaba.rocketmq.common.consumer.ConsumeFromWhere;
 import com.alibaba.rocketmq.common.message.Message;
 import com.alibaba.rocketmq.common.message.MessageExt;
 import com.alibaba.rocketmq.common.protocol.heartbeat.MessageModel;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +36,7 @@ public abstract class Messager {
     private void initProducer(String producerGroup) {
         producer = new DefaultMQProducer(producerGroup);
         producer.setNamesrvAddr(NS_IP_PORT);
+        producer.setInstanceName(producerGroup + System.currentTimeMillis());
     }
 
     private void initConsumer(String consumerGroup) {
@@ -43,6 +44,7 @@ public abstract class Messager {
         consumer.setNamesrvAddr(NS_IP_PORT);
         consumer.setMessageModel(MessageModel.BROADCASTING);
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        consumer.setInstanceName(consumerGroup + System.currentTimeMillis());
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext context) {
@@ -101,6 +103,6 @@ public abstract class Messager {
     protected abstract boolean onReceiveMessage(String messageId, Object messageBody);
 
     protected void log(String message) {
-        LoggerFactory.getLogger(getClass()).info(message);
+        System.out.printf("[%tT]%s\n", new Date(), message);
     }
 }

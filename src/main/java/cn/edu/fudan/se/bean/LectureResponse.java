@@ -1,6 +1,6 @@
 package cn.edu.fudan.se.bean;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSON;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +20,6 @@ public class LectureResponse implements Serializable {
 
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return JSON.toJSONString(this);
     }
 }

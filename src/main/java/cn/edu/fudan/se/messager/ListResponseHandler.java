@@ -17,7 +17,7 @@ public abstract class ListResponseHandler<T> {
         this.key = key;
         this.expectResponseCount = expectResponseCount;
         this.responseCount = new AtomicInteger(0);
-        this.result = new Vector<T>();
+        this.result = new Vector<>();
     }
 
     void addResponse(List<T> lecture) {

@@ -24,7 +24,7 @@ public class Invoker extends Messager implements Runnable {
     public Invoker(int responsorCount) {
         super(Parameter.TOPIC, Parameter.INVOKER_CONSUMER_GROUP, Parameter.INVOKER_PRODUCER_GROUP);
         this.responsorCount = responsorCount;
-        this.idHandlerMap = new ConcurrentHashMap<String, ListResponseHandler<Lecture>>();
+        this.idHandlerMap = new ConcurrentHashMap<>();
     }
 
     @Override
